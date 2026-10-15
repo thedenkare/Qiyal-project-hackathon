@@ -1,0 +1,50 @@
+{
+ "supplier_name": "ИП «Хозряд» (демо)",
+ "supplier_bin": "000000000003",
+ "doc_number": "312",
+ "doc_date": "2026-10-07",
+ "prices_include_vat": true,
+ "lines": [
+  {
+   "name": "Изолента синяя",
+   "qty": 91,
+   "unit": "шт",
+   "unit_price": 290,
+   "amount": 26390,
+   "vat_rate": 0,
+   "vat_amount": null,
+   "uncertain": [
+    "name"
+   ],
+   "confidence": 0.8
+  },
+  {
+   "name": "Лампа LED 10W E27",
+   "qty": 81,
+   "unit": "шт",
+   "unit_price": 770,
+   "amount": 62370,
+   "vat_rate": 0,
+   "vat_amount": null
+  },
+  {
+   "name": "Удлинитель 3гн 5м",
+   "qty": 16,
+   "unit": "шт",
+   "unit_price": 3060,
+   "amount": 48960,
+   "vat_rate": 0,
+   "vat_amount": null
+  },
+  {
+   "name": "Кисть плоская 50",
+   "qty": 43,
+   "unit": "шт",
+   "unit_price": 470,
+   "amount": 20210,
+   "vat_rate": 0,
+   "vat_amount": null
+  }
+ ],
+ "total_gross": 157930
+}

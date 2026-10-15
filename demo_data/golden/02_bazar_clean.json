@@ -1,0 +1,46 @@
+{
+ "supplier_name": "ИП «Базар-Строй» (демо)",
+ "supplier_bin": "000000000002",
+ "doc_number": "47",
+ "doc_date": "2026-10-06",
+ "prices_include_vat": true,
+ "lines": [
+  {
+   "name": "Гвозди 100 мм",
+   "qty": 50,
+   "unit": "кг",
+   "unit_price": 1130,
+   "amount": 56500,
+   "vat_rate": 0,
+   "vat_amount": null
+  },
+  {
+   "name": "Перчатки х/б",
+   "qty": 199,
+   "unit": "шт",
+   "unit_price": 230,
+   "amount": 45770,
+   "vat_rate": 0,
+   "vat_amount": null
+  },
+  {
+   "name": "Мешки мусорные 120л",
+   "qty": 80,
+   "unit": "уп",
+   "unit_price": 800,
+   "amount": 64000,
+   "vat_rate": 0,
+   "vat_amount": null
+  },
+  {
+   "name": "Ведро 12л",
+   "qty": 14,
+   "unit": "шт",
+   "unit_price": 1350,
+   "amount": 18900,
+   "vat_rate": 0,
+   "vat_amount": null
+  }
+ ],
+ "total_gross": 185170
+}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Накладная · MarginGuard{% endblock %}
+{% block content %}
+<h1>Сфотографируйте накладную</h1>
+<p class="muted">Увидите, что подорожало у поставщика, насколько просела маржа и какие цены на полке пора поднять.</p>
+
+{% if error %}<div class="banner err"><b>Не получилось.</b> {{ error }}</div>{% endif %}
+
+<form action="/upload" method="post" enctype="multipart/form-data" id="upform" class="card ink">
+  <label class="drop" id="drop">
+    <span class="ic">📷</span>
+    <div style="font-weight:800;font-size:1.1rem">Снять или выбрать файл</div>
+    <div class="tiny">JPG, PNG, WEBP или PDF до 15 МБ</div>
+    <div id="fname" class="mono" style="margin-top:6px"></div>
+    <input type="file" name="file" accept="image/*,application/pdf" capture="environment" id="file">
+  </label>
+  <div class="row" style="margin-top:12px;justify-content:space-between">
+    <div>
+      <label for="engine">Движок</label>
+      <select name="engine" id="engine">
+        <option value="auto">Авто (лучший доступный)</option>
+        <option value="local_ocr">Сначала локальный OCR</option>
+      </select>
+    </div>
+    <button class="btn tag" type="submit" id="go" disabled><span class="loading spinner"></span>Распознать</button>
+  </div>
+  <p class="tiny" style="margin-top:10px">Движки: {% for e in engines %}{{ e.label }} — {% if e.available %}<span class="yes">готов</span>{% else %}<span class="muted">не настроен</span>{% endif %}{{ "; " if not loop.last }}{% endfor %}.
+  Без движков демо-файлы всё равно работают, а свой документ можно ввести вручную.</p>
+</form>
+
+<div class="card">
+  <h2>Демо-накладные <span class="stamp demo">демо</span></h2>
+  <p class="tiny">Сгенерированы программно. Распознаются эталонным «демо-движком», это видно на экране проверки.</p>
+  <div class="demo-list">
+  {% for d in demo_files %}
+    <form method="post" action="/upload-demo/{{ d.file }}" class="demo-item" onsubmit="this.classList.add('busy')">
+      <img src="/demo-file/{{ d.file }}" alt="" loading="lazy">
+      <span class="t">{{ d.title }}</span>
+      <button class="btn small {{ 'tag' if loop.first else '' }}" type="submit"><span class="loading spinner"></span>Загрузить</button>
+    </form>
+  {% endfor %}
+  </div>
+</div>
+
+{% if docs %}
+<div class="card">
+  <h2>Последние документы</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Дата</th><th>Поставщик</th><th>Движок</th><th>Статус</th><th></th></tr>
+    {% for d in docs %}
+    <tr>
+      <td>{{ d.doc_date|ddate }}</td>
+      <td>{{ sups.get(d.supplier_id, d.supplier_name_raw or "—") }}</td>
+      <td>{{ d.engine_label }}{% if d.is_demo %} <span class="stamp demo">демо</span>{% endif %}</td>
+      <td>{% if d.status == 'confirmed' %}<span class="stamp ok">принят</span>{% else %}<span class="stamp warn">на проверке</span>{% endif %}</td>
+      <td class="num"><a href="{{ '/changes?doc=%d'|format(d.id) if d.status=='confirmed' else '/documents/%d'|format(d.id) }}">открыть →</a></td>
+    </tr>
+    {% endfor %}
+  </table></div>
+</div>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+<script>
+const f = document.getElementById('file'), go = document.getElementById('go');
+f.addEventListener('change', () => {
+  const ok = f.files.length > 0;
+  go.disabled = !ok;
+  document.getElementById('fname').textContent = ok ? f.files[0].name : '';
+  document.getElementById('drop').classList.toggle('has-file', ok);
+});
+document.getElementById('upform').addEventListener('submit', e => { e.target.classList.add('busy'); go.disabled = true; });
+</script>
+{% endblock %}

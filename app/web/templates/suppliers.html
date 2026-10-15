@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Поставщики · MarginGuard{% endblock %}
+{% block content %}
+<h1>Поставщики</h1>
+<p class="muted">Кто поднимает цены быстрее рынка и по кому вы {{ 'теряете' if p.regime.value == 'our' else 'не можете взять' }} НДС-зачёт.</p>
+
+{% if not rows %}
+<div class="card empty"><div class="ic">🚚</div><h2>Поставщиков пока нет</h2><p>Они появятся после первой подтверждённой накладной.</p><a class="btn tag" href="/">Загрузить накладную</a></div>
+{% else %}
+
+{% if p.regime.value == 'our' %}
+<div class="grid two">
+  <div class="pricetag">
+    <div class="lbl">Без НДС-зачёта за 6 мес. (сценарий)</div>
+    <div class="big">{{ leak_total|tg }}</div>
+    <div class="tiny" style="color:var(--tag-ink)">столько НДС можно было бы взять в зачёт, если бы те же закупки по той же цене шли от плательщика НДС с ЭСФ</div>
+  </div>
+  <div class="card" style="margin:0">
+    <h3>Как считается</h3>
+    <p class="tiny">Зачёт = закупки без зачёта × 16 / 116. Это сценарий «что если», а не гарантия экономии: поставщик с НДС может стоить дороже. Входной НДС засчитывается только при ЭСФ с выделенным НДС от плательщика НДС
+      (<a href="{{ src('input_vat_credit_rule').url }}" target="_blank" rel="noopener">источник</a>, проверено {{ src('input_vat_credit_rule').verified }}).</p>
+  </div>
+</div>
+{% else %}
+<div class="banner info">Профиль: упрощённая декларация. Зачёта входного НДС нет ни у одного поставщика, поэтому «утечка» не считается. Себестоимость = всё, что заплачено.</div>
+{% endif %}
+
+<div class="card" style="margin-top:14px">
+  <h2>Индекс закупочных цен</h2>
+  <p class="tiny">100 = первая закупка товара у поставщика. Пунктир — рынок: непродовольственные товары {{ bench|pct(1, True) }}/мес (<a href="{{ src('market_benchmark').url }}" target="_blank" rel="noopener">stat.gov.kz</a>, обновляемый параметр).</p>
+  <div class="chart-box"><canvas id="ch" aria-label="График индекса цен поставщиков"></canvas></div>
+</div>
+
+<div class="card">
+  <div class="tablewrap"><table>
+    <tr><th>Поставщик</th><th class="num">Закупки 6 мес.</th><th class="num">Рост/мес</th><th>НДС-зачёт</th>{% if p.regime.value == 'our' %}<th class="num">Без зачёта (сценарий)</th>{% endif %}<th></th></tr>
+    {% for r in rows %}
+    <tr>
+      <td><b>{{ r.supplier.name }}</b><div class="tiny">{{ r.supplier.note }}{{ ' · ' if r.supplier.note }}{{ r.products }} тов.</div></td>
+      <td class="num">{{ r.purchases_gross|tg }}</td>
+      <td class="num">{{ r.monthly_growth|pct(1, True) }}{% if r.faster %}<div><span class="stamp warn">быстрее рынка</span></div>{% elif r.faster == false %}<div><span class="stamp ok">в рынке</span></div>{% endif %}</td>
+      <td>{% if r.credit %}<span class="yes">есть</span>{% else %}<span class="no">нет</span>{% endif %}
+        <div class="tiny">{{ 'НДС' if r.supplier.vat_payer else 'без НДС' }}{{ ', ЭСФ' if r.supplier.gives_esf }}</div></td>
+      {% if p.regime.value == 'our' %}<td class="num">{{ r.leak|tg if r.leak else '—' }}</td>{% endif %}
+      <td>
+        <details><summary class="tiny">изменить</summary>
+          <form method="post" action="/suppliers/{{ r.supplier.id }}" style="margin-top:6px">
+            <label class="row" style="font-weight:600"><input type="checkbox" name="vat_payer" value="1" {{ 'checked' if r.supplier.vat_payer }} style="min-height:auto"> плательщик НДС</label>
+            <label class="row" style="font-weight:600"><input type="checkbox" name="gives_esf" value="1" {{ 'checked' if r.supplier.gives_esf }} style="min-height:auto"> даёт ЭСФ</label>
+            <button class="btn small" type="submit">Сохранить</button>
+          </form></details>
+      </td>
+    </tr>
+    {% endfor %}
+  </table></div>
+  <p class="tiny">Рост/мес — средний по товарам поставщика (с весом по сумме закупок), от первой до последней закупки.</p>
+</div>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+<script src="/static/vendor/chart.umd.min.js"></script>
+<script>
+(() => {
+  const el = document.getElementById('ch'); if (!el) return;
+  const d = {{ chart|safe }};
+  const colors = ['#d7263d', '#2a4d9b', '#217a4b', '#c77700', '#7a3fb0', '#1d1a16'];
+  const ds = d.series.map((s, i) => ({label: s.label, data: s.data, borderColor: colors[i % colors.length], backgroundColor: colors[i % colors.length], spanGaps: true, tension: .25, borderWidth: 2.5, pointRadius: 3}));
+  if (d.benchmark) ds.push({label: 'Рынок (непрод.)', data: d.benchmark, borderColor: '#8c8476', borderDash: [6, 5], pointRadius: 0, borderWidth: 2});
+  new Chart(el, {type: 'line', data: {labels: d.labels, datasets: ds},
+    options: {maintainAspectRatio: false, interaction: {mode: 'index', intersect: false},
+      plugins: {legend: {position: 'bottom', labels: {boxWidth: 12, font: {size: 11}}}},
+      scales: {y: {title: {display: true, text: 'индекс'}, grid: {color: '#eee5d4'}}, x: {grid: {display: false}}}}});
+})();
+</script>
+{% endblock %}

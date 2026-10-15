@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Пример результата · MarginGuard</title>
+<link rel="stylesheet" href="/static/css/app.css">
+<style>body{background:#fff;padding:18px;max-width:820px;margin:0 auto} h1{font-size:1.5rem} table{font-size:.85rem} @page{size:A4;margin:12mm}</style>
+</head><body>
+<div class="noprint row" style="justify-content:space-between;margin-bottom:10px"><a class="btn small" href="/settings">← Назад</a><button class="btn small tag" onclick="window.print()">🖨 Печать</button></div>
+<div class="row" style="justify-content:space-between"><div class="brand"><span class="tagmark"></span>MarginGuard</div><span class="stamp demo">пример на демо-данных</span></div>
+<h1 style="margin-top:12px">Сфотографировали накладную — вот что увидели</h1>
+<p>Цена у поставщика выросла, а ценник на полке нет. MarginGuard сравнивает каждую накладную с прошлыми закупками и показывает, где вы теряете маржу.</p>
+<div class="grid two">
+  <div class="pricetag"><div class="lbl">Подорожали</div><div class="big">{{ v.increased }} поз.</div>
+    <div>в среднем {{ v.avg_increase|pct(1, True) }}{% if v.avg_monthly is not none %} (≈ {{ v.avg_monthly|pct(1, True) }}/мес){% endif %}; рынок {{ v.benchmark|pct(1, True) }}/мес</div></div>
+  <div class="stat"><div class="lbl">Маржа по этим позициям</div><div class="big">{{ v.margin_before|pct }} → {{ v.margin_after|pct }}</div>
+    <div class="lbl">Уходит, если не менять цены: <b>{{ v.loss_total|tg }}/мес</b></div></div>
+</div>
+<h2 style="margin-top:16px">Какие цены поднять</h2>
+<table><tr><th>Товар</th><th class="num">Рост закупки</th><th class="num">Маржа</th><th class="num">Сейчас</th><th class="num">Предлагаем</th></tr>
+{% for r in v.rows if r.alert.rec_price and r.product.shelf_price and r.alert.rec_price > r.product.shelf_price %}{% if loop.index <= 8 %}
+<tr><td>{{ r.product.name }}</td><td class="num">{{ r.alert.delta_pct|pct(1, True) }}</td><td class="num">{{ r.alert.margin_before|pct }} → {{ r.alert.margin_after|pct }}</td>
+<td class="num">{{ r.product.shelf_price|tg }}</td><td class="num"><b>{{ r.alert.rec_price|tg }}</b></td></tr>{% endif %}
+{% endfor %}</table>
+{% if p.regime.value == 'our' %}
+<h2 style="margin-top:16px">Поставщики без НДС-зачёта</h2>
+<p>{% for s in sups if not s.credit %}{{ s.supplier.name }}{{ ', ' if not loop.last }}{% endfor %}: за 6 мес. сценарно <b>{{ leak_total|tg }}</b> НДС не идёт в зачёт (если бы те же закупки по той же цене шли от плательщика НДС с ЭСФ).</p>
+{% endif %}
+<p class="tiny" style="margin-top:16px">Все данные на этой странице вымышлены (демо-магазин). Расчёт: маржа до подоходного налога и накладных; потери = рост себестоимости × продажи в месяц; влияние на спрос не оценивается. Это инструмент оценки, а не налоговая консультация.</p>
+<div class="card" style="margin-top:14px"><b>Что нужно от вас:</b> фото накладной и список цен на полке (можно Excel). Без складской программы, без интеграций.</div>
+</body></html>

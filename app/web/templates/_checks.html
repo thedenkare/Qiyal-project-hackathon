@@ -1,0 +1,13 @@
+<div id="checks">
+{% if issues %}
+  <div class="banner err">
+    <b>Проверка сумм: {{ issues|length }} {{ 'расхождение' if issues|length == 1 else 'расхождения' if issues|length < 5 else 'расхождений' }}.</b>
+    <ul class="checks" style="margin:.4em 0 0;padding-left:1.2em">
+    {% for i in issues %}<li>{% if i.line is not none %}Строка {{ i.line + 1 }}: {% else %}Итоги: {% endif %}{{ i.message }}</li>{% endfor %}
+    </ul>
+    <div class="tiny" style="margin-top:4px">Сверьте подсвеченные ячейки с бумагой. Подтвердить можно и с расхождением, если на бумаге так и написано.</div>
+  </div>
+{% else %}
+  <div class="banner ok"><b>✓ Суммы сходятся:</b> кол-во × цена = сумма в каждой строке, итоги сходятся со строками.</div>
+{% endif %}
+</div>

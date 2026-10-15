@@ -1,0 +1,1226 @@
+{
+ "documents": [
+  {
+   "supplier_name": "ТОО «Демо-Оптбаза»",
+   "supplier_bin": "000000000001",
+   "doc_number": "101",
+   "doc_date": "2026-05-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Цемент ПЦ-400 Д20, меш. 50кг",
+     "qty": 79,
+     "unit": "мешок",
+     "unit_price": 2900,
+     "amount": 229100,
+     "vat_rate": 0.16,
+     "vat_amount": 31600.0
+    },
+    {
+     "name": "Шпатлевка финиш. 20кг",
+     "qty": 34,
+     "unit": "мешок",
+     "unit_price": 4200,
+     "amount": 142800,
+     "vat_rate": 0.16,
+     "vat_amount": 19696.55
+    },
+    {
+     "name": "Краска в/э интерьерная 14 кг",
+     "qty": 26,
+     "unit": "шт",
+     "unit_price": 6300,
+     "amount": 163800,
+     "vat_rate": 0.16,
+     "vat_amount": 22593.1
+    },
+    {
+     "name": "Грунт глуб. проникн. 10л",
+     "qty": 26,
+     "unit": "шт",
+     "unit_price": 3100,
+     "amount": 80600,
+     "vat_rate": 0.16,
+     "vat_amount": 11117.24
+    },
+    {
+     "name": "Клей для плитки 25 кг",
+     "qty": 39,
+     "unit": "мешок",
+     "unit_price": 2600,
+     "amount": 101400,
+     "vat_rate": 0.16,
+     "vat_amount": 13986.21
+    },
+    {
+     "name": "Пена монт. проф. 750мл",
+     "qty": 57,
+     "unit": "шт",
+     "unit_price": 1850,
+     "amount": 105450,
+     "vat_rate": 0.16,
+     "vat_amount": 14544.83
+    },
+    {
+     "name": "Саморез д/дерева 3,5х35 (1кг)",
+     "qty": 45,
+     "unit": "уп",
+     "unit_price": 1700,
+     "amount": 76500,
+     "vat_rate": 0.16,
+     "vat_amount": 10551.72
+    },
+    {
+     "name": "Валик 250мм",
+     "qty": 22,
+     "unit": "шт",
+     "unit_price": 1100,
+     "amount": 24200,
+     "vat_rate": 0.16,
+     "vat_amount": 3337.93
+    },
+    {
+     "name": "Лента малярная 48мм",
+     "qty": 69,
+     "unit": "шт",
+     "unit_price": 620,
+     "amount": 42780,
+     "vat_rate": 0.16,
+     "vat_amount": 5900.69
+    }
+   ],
+   "total_gross": 966630,
+   "total_vat": 133328.27,
+   "total_net": 833301.73
+  },
+  {
+   "supplier_name": "ИП «Базар-Строй» (демо)",
+   "supplier_bin": "000000000002",
+   "doc_number": "102",
+   "doc_date": "2026-05-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Гвозди 100 мм",
+     "qty": 52,
+     "unit": "кг",
+     "unit_price": 1050,
+     "amount": 54600,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Перчатки х/б",
+     "qty": 193,
+     "unit": "шт",
+     "unit_price": 220,
+     "amount": 42460,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Мешки мусорные 120л",
+     "qty": 89,
+     "unit": "уп",
+     "unit_price": 750,
+     "amount": 66750,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Ведро 12л",
+     "qty": 20,
+     "unit": "шт",
+     "unit_price": 1300,
+     "amount": 26000,
+     "vat_rate": 0,
+     "vat_amount": null
+    }
+   ],
+   "total_gross": 189810
+  },
+  {
+   "supplier_name": "ИП «Хозряд» (демо)",
+   "supplier_bin": "000000000003",
+   "doc_number": "103",
+   "doc_date": "2026-05-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Изолента синяя",
+     "qty": 89,
+     "unit": "шт",
+     "unit_price": 280,
+     "amount": 24920,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Лампа LED 10W E27",
+     "qty": 86,
+     "unit": "шт",
+     "unit_price": 650,
+     "amount": 55900,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Удлинитель 3гн 5м",
+     "qty": 14,
+     "unit": "шт",
+     "unit_price": 2900,
+     "amount": 40600,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Кисть плоская 50",
+     "qty": 26,
+     "unit": "шт",
+     "unit_price": 450,
+     "amount": 11700,
+     "vat_rate": 0,
+     "vat_amount": null
+    }
+   ],
+   "total_gross": 133120
+  },
+  {
+   "supplier_name": "ТОО «Рассрочка-Демо»",
+   "supplier_bin": "000000000004",
+   "doc_number": "104",
+   "doc_date": "2026-05-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Профиль направляющий 27х28 3м",
+     "qty": 101,
+     "unit": "шт",
+     "unit_price": 1150,
+     "amount": 116150,
+     "vat_rate": 0.16,
+     "vat_amount": 16020.69
+    },
+    {
+     "name": "ГКЛ 12,5 мм",
+     "qty": 49,
+     "unit": "шт",
+     "unit_price": 3400,
+     "amount": 166600,
+     "vat_rate": 0.16,
+     "vat_amount": 22979.31
+    },
+    {
+     "name": "Плинтус ПВХ 2,5м",
+     "qty": 50,
+     "unit": "шт",
+     "unit_price": 900,
+     "amount": 45000,
+     "vat_rate": 0.16,
+     "vat_amount": 6206.9
+    }
+   ],
+   "total_gross": 327750,
+   "total_vat": 45206.9,
+   "total_net": 282543.1
+  },
+  {
+   "supplier_name": "ТОО «Демо-Оптбаза»",
+   "supplier_bin": "000000000001",
+   "doc_number": "105",
+   "doc_date": "2026-06-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Цемент ПЦ-400 Д20, меш. 50кг",
+     "qty": 113,
+     "unit": "мешок",
+     "unit_price": 2930,
+     "amount": 331090,
+     "vat_rate": 0.16,
+     "vat_amount": 45667.59
+    },
+    {
+     "name": "Шпатлевка финиш. 20кг",
+     "qty": 38,
+     "unit": "мешок",
+     "unit_price": 4250,
+     "amount": 161500,
+     "vat_rate": 0.16,
+     "vat_amount": 22275.86
+    },
+    {
+     "name": "Краска в/э интерьерная 14 кг",
+     "qty": 21,
+     "unit": "шт",
+     "unit_price": 6380,
+     "amount": 133980,
+     "vat_rate": 0.16,
+     "vat_amount": 18480.0
+    },
+    {
+     "name": "Грунт глуб. проникн. 10л",
+     "qty": 18,
+     "unit": "шт",
+     "unit_price": 3130,
+     "amount": 56340,
+     "vat_rate": 0.16,
+     "vat_amount": 7771.03
+    },
+    {
+     "name": "Клей для плитки 25 кг",
+     "qty": 65,
+     "unit": "мешок",
+     "unit_price": 2620,
+     "amount": 170300,
+     "vat_rate": 0.16,
+     "vat_amount": 23489.66
+    },
+    {
+     "name": "Пена монт. проф. 750мл",
+     "qty": 85,
+     "unit": "шт",
+     "unit_price": 1880,
+     "amount": 159800,
+     "vat_rate": 0.16,
+     "vat_amount": 22041.38
+    },
+    {
+     "name": "Саморез д/дерева 3,5х35 (1кг)",
+     "qty": 50,
+     "unit": "уп",
+     "unit_price": 1720,
+     "amount": 86000,
+     "vat_rate": 0.16,
+     "vat_amount": 11862.07
+    },
+    {
+     "name": "Валик 250мм",
+     "qty": 27,
+     "unit": "шт",
+     "unit_price": 1100,
+     "amount": 29700,
+     "vat_rate": 0.16,
+     "vat_amount": 4096.55
+    },
+    {
+     "name": "Лента малярная 48мм",
+     "qty": 60,
+     "unit": "шт",
+     "unit_price": 620,
+     "amount": 37200,
+     "vat_rate": 0.16,
+     "vat_amount": 5131.03
+    }
+   ],
+   "total_gross": 1165910,
+   "total_vat": 160815.17,
+   "total_net": 1005094.83
+  },
+  {
+   "supplier_name": "ИП «Базар-Строй» (демо)",
+   "supplier_bin": "000000000002",
+   "doc_number": "106",
+   "doc_date": "2026-06-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Гвозди 100 мм",
+     "qty": 38,
+     "unit": "кг",
+     "unit_price": 1070,
+     "amount": 40660,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Перчатки х/б",
+     "qty": 154,
+     "unit": "шт",
+     "unit_price": 220,
+     "amount": 33880,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Мешки мусорные 120л",
+     "qty": 79,
+     "unit": "уп",
+     "unit_price": 760,
+     "amount": 60040,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Ведро 12л",
+     "qty": 15,
+     "unit": "шт",
+     "unit_price": 1310,
+     "amount": 19650,
+     "vat_rate": 0,
+     "vat_amount": null
+    }
+   ],
+   "total_gross": 154230
+  },
+  {
+   "supplier_name": "ИП «Хозряд» (демо)",
+   "supplier_bin": "000000000003",
+   "doc_number": "107",
+   "doc_date": "2026-06-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Изолента синяя",
+     "qty": 83,
+     "unit": "шт",
+     "unit_price": 280,
+     "amount": 23240,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Лампа LED 10W E27",
+     "qty": 125,
+     "unit": "шт",
+     "unit_price": 660,
+     "amount": 82500,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Удлинитель 3гн 5м",
+     "qty": 14,
+     "unit": "шт",
+     "unit_price": 2930,
+     "amount": 41020,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Кисть плоская 50",
+     "qty": 36,
+     "unit": "шт",
+     "unit_price": 450,
+     "amount": 16200,
+     "vat_rate": 0,
+     "vat_amount": null
+    }
+   ],
+   "total_gross": 162960
+  },
+  {
+   "supplier_name": "ТОО «Рассрочка-Демо»",
+   "supplier_bin": "000000000004",
+   "doc_number": "108",
+   "doc_date": "2026-06-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Профиль направляющий 27х28 3м",
+     "qty": 61,
+     "unit": "шт",
+     "unit_price": 1160,
+     "amount": 70760,
+     "vat_rate": 0.16,
+     "vat_amount": 9760.0
+    },
+    {
+     "name": "ГКЛ 12,5 мм",
+     "qty": 57,
+     "unit": "шт",
+     "unit_price": 3430,
+     "amount": 195510,
+     "vat_rate": 0.16,
+     "vat_amount": 26966.9
+    },
+    {
+     "name": "Плинтус ПВХ 2,5м",
+     "qty": 39,
+     "unit": "шт",
+     "unit_price": 910,
+     "amount": 35490,
+     "vat_rate": 0.16,
+     "vat_amount": 4895.17
+    }
+   ],
+   "total_gross": 301760,
+   "total_vat": 41622.07,
+   "total_net": 260137.93
+  },
+  {
+   "supplier_name": "ТОО «Демо-Оптбаза»",
+   "supplier_bin": "000000000001",
+   "doc_number": "109",
+   "doc_date": "2026-07-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Цемент ПЦ-400 Д20, меш. 50кг",
+     "qty": 97,
+     "unit": "мешок",
+     "unit_price": 2960,
+     "amount": 287120,
+     "vat_rate": 0.16,
+     "vat_amount": 39602.76
+    },
+    {
+     "name": "Шпатлевка финиш. 20кг",
+     "qty": 32,
+     "unit": "мешок",
+     "unit_price": 4300,
+     "amount": 137600,
+     "vat_rate": 0.16,
+     "vat_amount": 18979.31
+    },
+    {
+     "name": "Краска в/э интерьерная 14 кг",
+     "qty": 27,
+     "unit": "шт",
+     "unit_price": 6460,
+     "amount": 174420,
+     "vat_rate": 0.16,
+     "vat_amount": 24057.93
+    },
+    {
+     "name": "Грунт глуб. проникн. 10л",
+     "qty": 21,
+     "unit": "шт",
+     "unit_price": 3170,
+     "amount": 66570,
+     "vat_rate": 0.16,
+     "vat_amount": 9182.07
+    },
+    {
+     "name": "Клей для плитки 25 кг",
+     "qty": 39,
+     "unit": "мешок",
+     "unit_price": 2640,
+     "amount": 102960,
+     "vat_rate": 0.16,
+     "vat_amount": 14201.38
+    },
+    {
+     "name": "Пена монт. проф. 750мл",
+     "qty": 68,
+     "unit": "шт",
+     "unit_price": 1900,
+     "amount": 129200,
+     "vat_rate": 0.16,
+     "vat_amount": 17820.69
+    },
+    {
+     "name": "Саморез д/дерева 3,5х35 (1кг)",
+     "qty": 49,
+     "unit": "уп",
+     "unit_price": 1740,
+     "amount": 85260,
+     "vat_rate": 0.16,
+     "vat_amount": 11760.0
+    },
+    {
+     "name": "Валик 250мм",
+     "qty": 23,
+     "unit": "шт",
+     "unit_price": 1100,
+     "amount": 25300,
+     "vat_rate": 0.16,
+     "vat_amount": 3489.66
+    },
+    {
+     "name": "Лента малярная 48мм",
+     "qty": 59,
+     "unit": "шт",
+     "unit_price": 620,
+     "amount": 36580,
+     "vat_rate": 0.16,
+     "vat_amount": 5045.52
+    }
+   ],
+   "total_gross": 1045010,
+   "total_vat": 144139.32,
+   "total_net": 900870.68
+  },
+  {
+   "supplier_name": "ИП «Базар-Строй» (демо)",
+   "supplier_bin": "000000000002",
+   "doc_number": "110",
+   "doc_date": "2026-07-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Гвозди 100 мм",
+     "qty": 64,
+     "unit": "кг",
+     "unit_price": 1080,
+     "amount": 69120,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Перчатки х/б",
+     "qty": 146,
+     "unit": "шт",
+     "unit_price": 220,
+     "amount": 32120,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Мешки мусорные 120л",
+     "qty": 73,
+     "unit": "уп",
+     "unit_price": 770,
+     "amount": 56210,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Ведро 12л",
+     "qty": 21,
+     "unit": "шт",
+     "unit_price": 1320,
+     "amount": 27720,
+     "vat_rate": 0,
+     "vat_amount": null
+    }
+   ],
+   "total_gross": 185170
+  },
+  {
+   "supplier_name": "ИП «Хозряд» (демо)",
+   "supplier_bin": "000000000003",
+   "doc_number": "111",
+   "doc_date": "2026-07-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Изолента синяя",
+     "qty": 84,
+     "unit": "шт",
+     "unit_price": 290,
+     "amount": 24360,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Лампа LED 10W E27",
+     "qty": 103,
+     "unit": "шт",
+     "unit_price": 660,
+     "amount": 67980,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Удлинитель 3гн 5м",
+     "qty": 9,
+     "unit": "шт",
+     "unit_price": 2960,
+     "amount": 26640,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Кисть плоская 50",
+     "qty": 28,
+     "unit": "шт",
+     "unit_price": 460,
+     "amount": 12880,
+     "vat_rate": 0,
+     "vat_amount": null
+    }
+   ],
+   "total_gross": 131860
+  },
+  {
+   "supplier_name": "ТОО «Рассрочка-Демо»",
+   "supplier_bin": "000000000004",
+   "doc_number": "112",
+   "doc_date": "2026-07-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Профиль направляющий 27х28 3м",
+     "qty": 66,
+     "unit": "шт",
+     "unit_price": 1180,
+     "amount": 77880,
+     "vat_rate": 0.16,
+     "vat_amount": 10742.07
+    },
+    {
+     "name": "ГКЛ 12,5 мм",
+     "qty": 37,
+     "unit": "шт",
+     "unit_price": 3470,
+     "amount": 128390,
+     "vat_rate": 0.16,
+     "vat_amount": 17708.97
+    },
+    {
+     "name": "Плинтус ПВХ 2,5м",
+     "qty": 48,
+     "unit": "шт",
+     "unit_price": 920,
+     "amount": 44160,
+     "vat_rate": 0.16,
+     "vat_amount": 6091.03
+    }
+   ],
+   "total_gross": 250430,
+   "total_vat": 34542.07,
+   "total_net": 215887.93
+  },
+  {
+   "supplier_name": "ТОО «Демо-Оптбаза»",
+   "supplier_bin": "000000000001",
+   "doc_number": "113",
+   "doc_date": "2026-08-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Цемент ПЦ-400 Д20, меш. 50кг",
+     "qty": 125,
+     "unit": "мешок",
+     "unit_price": 2990,
+     "amount": 373750,
+     "vat_rate": 0.16,
+     "vat_amount": 51551.72
+    },
+    {
+     "name": "Шпатлевка финиш. 20кг",
+     "qty": 26,
+     "unit": "мешок",
+     "unit_price": 4350,
+     "amount": 113100,
+     "vat_rate": 0.16,
+     "vat_amount": 15600.0
+    },
+    {
+     "name": "Краска в/э интерьерная 14 кг",
+     "qty": 27,
+     "unit": "шт",
+     "unit_price": 6550,
+     "amount": 176850,
+     "vat_rate": 0.16,
+     "vat_amount": 24393.1
+    },
+    {
+     "name": "Грунт глуб. проникн. 10л",
+     "qty": 21,
+     "unit": "шт",
+     "unit_price": 3200,
+     "amount": 67200,
+     "vat_rate": 0.16,
+     "vat_amount": 9268.97
+    },
+    {
+     "name": "Клей для плитки 25 кг",
+     "qty": 50,
+     "unit": "мешок",
+     "unit_price": 2660,
+     "amount": 133000,
+     "vat_rate": 0.16,
+     "vat_amount": 18344.83
+    },
+    {
+     "name": "Пена монт. проф. 750мл",
+     "qty": 57,
+     "unit": "шт",
+     "unit_price": 1930,
+     "amount": 110010,
+     "vat_rate": 0.16,
+     "vat_amount": 15173.79
+    },
+    {
+     "name": "Саморез д/дерева 3,5х35 (1кг)",
+     "qty": 52,
+     "unit": "уп",
+     "unit_price": 1760,
+     "amount": 91520,
+     "vat_rate": 0.16,
+     "vat_amount": 12623.45
+    },
+    {
+     "name": "Валик 250мм",
+     "qty": 23,
+     "unit": "шт",
+     "unit_price": 1100,
+     "amount": 25300,
+     "vat_rate": 0.16,
+     "vat_amount": 3489.66
+    },
+    {
+     "name": "Лента малярная 48мм",
+     "qty": 58,
+     "unit": "шт",
+     "unit_price": 620,
+     "amount": 35960,
+     "vat_rate": 0.16,
+     "vat_amount": 4960.0
+    }
+   ],
+   "total_gross": 1126690,
+   "total_vat": 155405.52,
+   "total_net": 971284.48
+  },
+  {
+   "supplier_name": "ИП «Базар-Строй» (демо)",
+   "supplier_bin": "000000000002",
+   "doc_number": "114",
+   "doc_date": "2026-08-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Гвозди 100 мм",
+     "qty": 50,
+     "unit": "кг",
+     "unit_price": 1100,
+     "amount": 55000,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Перчатки х/б",
+     "qty": 213,
+     "unit": "шт",
+     "unit_price": 230,
+     "amount": 48990,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Мешки мусорные 120л",
+     "qty": 98,
+     "unit": "уп",
+     "unit_price": 780,
+     "amount": 76440,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Ведро 12л",
+     "qty": 17,
+     "unit": "шт",
+     "unit_price": 1330,
+     "amount": 22610,
+     "vat_rate": 0,
+     "vat_amount": null
+    }
+   ],
+   "total_gross": 203040
+  },
+  {
+   "supplier_name": "ИП «Хозряд» (демо)",
+   "supplier_bin": "000000000003",
+   "doc_number": "115",
+   "doc_date": "2026-08-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Изолента синяя",
+     "qty": 88,
+     "unit": "шт",
+     "unit_price": 290,
+     "amount": 25520,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Лампа LED 10W E27",
+     "qty": 112,
+     "unit": "шт",
+     "unit_price": 670,
+     "amount": 75040,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Удлинитель 3гн 5м",
+     "qty": 11,
+     "unit": "шт",
+     "unit_price": 3000,
+     "amount": 33000,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Кисть плоская 50",
+     "qty": 40,
+     "unit": "шт",
+     "unit_price": 460,
+     "amount": 18400,
+     "vat_rate": 0,
+     "vat_amount": null
+    }
+   ],
+   "total_gross": 151960
+  },
+  {
+   "supplier_name": "ТОО «Рассрочка-Демо»",
+   "supplier_bin": "000000000004",
+   "doc_number": "116",
+   "doc_date": "2026-08-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Профиль направляющий 27х28 3м",
+     "qty": 85,
+     "unit": "шт",
+     "unit_price": 1190,
+     "amount": 101150,
+     "vat_rate": 0.16,
+     "vat_amount": 13951.72
+    },
+    {
+     "name": "ГКЛ 12,5 мм",
+     "qty": 50,
+     "unit": "шт",
+     "unit_price": 3500,
+     "amount": 175000,
+     "vat_rate": 0.16,
+     "vat_amount": 24137.93
+    },
+    {
+     "name": "Плинтус ПВХ 2,5м",
+     "qty": 52,
+     "unit": "шт",
+     "unit_price": 930,
+     "amount": 48360,
+     "vat_rate": 0.16,
+     "vat_amount": 6670.34
+    }
+   ],
+   "total_gross": 324510,
+   "total_vat": 44759.99,
+   "total_net": 279750.01
+  },
+  {
+   "supplier_name": "ТОО «Демо-Оптбаза»",
+   "supplier_bin": "000000000001",
+   "doc_number": "117",
+   "doc_date": "2026-09-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Цемент ПЦ-400 Д20, меш. 50кг",
+     "qty": 98,
+     "unit": "мешок",
+     "unit_price": 3020,
+     "amount": 295960,
+     "vat_rate": 0.16,
+     "vat_amount": 40822.07
+    },
+    {
+     "name": "Шпатлевка финиш. 20кг",
+     "qty": 30,
+     "unit": "мешок",
+     "unit_price": 4410,
+     "amount": 132300,
+     "vat_rate": 0.16,
+     "vat_amount": 18248.28
+    },
+    {
+     "name": "Краска в/э интерьерная 14 кг",
+     "qty": 22,
+     "unit": "шт",
+     "unit_price": 6630,
+     "amount": 145860,
+     "vat_rate": 0.16,
+     "vat_amount": 20118.62
+    },
+    {
+     "name": "Грунт глуб. проникн. 10л",
+     "qty": 15,
+     "unit": "шт",
+     "unit_price": 3240,
+     "amount": 48600,
+     "vat_rate": 0.16,
+     "vat_amount": 6703.45
+    },
+    {
+     "name": "Клей для плитки 25 кг",
+     "qty": 56,
+     "unit": "мешок",
+     "unit_price": 2680,
+     "amount": 150080,
+     "vat_rate": 0.16,
+     "vat_amount": 20700.69
+    },
+    {
+     "name": "Пена монт. проф. 750мл",
+     "qty": 72,
+     "unit": "шт",
+     "unit_price": 1960,
+     "amount": 141120,
+     "vat_rate": 0.16,
+     "vat_amount": 19464.83
+    },
+    {
+     "name": "Саморез д/дерева 3,5х35 (1кг)",
+     "qty": 41,
+     "unit": "уп",
+     "unit_price": 1780,
+     "amount": 72980,
+     "vat_rate": 0.16,
+     "vat_amount": 10066.21
+    },
+    {
+     "name": "Валик 250мм",
+     "qty": 22,
+     "unit": "шт",
+     "unit_price": 1100,
+     "amount": 24200,
+     "vat_rate": 0.16,
+     "vat_amount": 3337.93
+    },
+    {
+     "name": "Лента малярная 48мм",
+     "qty": 59,
+     "unit": "шт",
+     "unit_price": 620,
+     "amount": 36580,
+     "vat_rate": 0.16,
+     "vat_amount": 5045.52
+    }
+   ],
+   "total_gross": 1047680,
+   "total_vat": 144507.6,
+   "total_net": 903172.4
+  },
+  {
+   "supplier_name": "ИП «Базар-Строй» (демо)",
+   "supplier_bin": "000000000002",
+   "doc_number": "118",
+   "doc_date": "2026-09-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Гвозди 100 мм",
+     "qty": 64,
+     "unit": "кг",
+     "unit_price": 1110,
+     "amount": 71040,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Перчатки х/б",
+     "qty": 146,
+     "unit": "шт",
+     "unit_price": 230,
+     "amount": 33580,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Мешки мусорные 120л",
+     "qty": 76,
+     "unit": "уп",
+     "unit_price": 790,
+     "amount": 60040,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Ведро 12л",
+     "qty": 17,
+     "unit": "шт",
+     "unit_price": 1340,
+     "amount": 22780,
+     "vat_rate": 0,
+     "vat_amount": null
+    }
+   ],
+   "total_gross": 187440
+  },
+  {
+   "supplier_name": "ИП «Хозряд» (демо)",
+   "supplier_bin": "000000000003",
+   "doc_number": "119",
+   "doc_date": "2026-09-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Изолента синяя",
+     "qty": 101,
+     "unit": "шт",
+     "unit_price": 290,
+     "amount": 29290,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Лампа LED 10W E27",
+     "qty": 120,
+     "unit": "шт",
+     "unit_price": 670,
+     "amount": 80400,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Удлинитель 3гн 5м",
+     "qty": 13,
+     "unit": "шт",
+     "unit_price": 3030,
+     "amount": 39390,
+     "vat_rate": 0,
+     "vat_amount": null
+    },
+    {
+     "name": "Кисть плоская 50",
+     "qty": 42,
+     "unit": "шт",
+     "unit_price": 470,
+     "amount": 19740,
+     "vat_rate": 0,
+     "vat_amount": null
+    }
+   ],
+   "total_gross": 168820
+  },
+  {
+   "supplier_name": "ТОО «Рассрочка-Демо»",
+   "supplier_bin": "000000000004",
+   "doc_number": "120",
+   "doc_date": "2026-09-08",
+   "prices_include_vat": true,
+   "lines": [
+    {
+     "name": "Профиль направляющий 27х28 3м",
+     "qty": 102,
+     "unit": "шт",
+     "unit_price": 1210,
+     "amount": 123420,
+     "vat_rate": 0.16,
+     "vat_amount": 17023.45
+    },
+    {
+     "name": "ГКЛ 12,5 мм",
+     "qty": 45,
+     "unit": "шт",
+     "unit_price": 3540,
+     "amount": 159300,
+     "vat_rate": 0.16,
+     "vat_amount": 21972.41
+    },
+    {
+     "name": "Плинтус ПВХ 2,5м",
+     "qty": 53,
+     "unit": "шт",
+     "unit_price": 940,
+     "amount": 49820,
+     "vat_rate": 0.16,
+     "vat_amount": 6871.72
+    }
+   ],
+   "total_gross": 332540,
+   "total_vat": 45867.58,
+   "total_net": 286672.42
+  }
+ ],
+ "aliases": [
+  {
+   "supplier_bin": "000000000001",
+   "alias": "Цемент ПЦ-400 Д20, меш. 50кг",
+   "product": "Цемент М400 50 кг"
+  },
+  {
+   "supplier_bin": "000000000001",
+   "alias": "Шпатлевка финиш. 20кг",
+   "product": "Шпаклёвка финишная 20 кг"
+  },
+  {
+   "supplier_bin": "000000000001",
+   "alias": "Краска в/э интерьерная 14 кг",
+   "product": "Краска водоэмульсионная 14 кг"
+  },
+  {
+   "supplier_bin": "000000000001",
+   "alias": "Грунт глуб. проникн. 10л",
+   "product": "Грунтовка глубокого проникновения 10 л"
+  },
+  {
+   "supplier_bin": "000000000001",
+   "alias": "Клей для плитки 25 кг",
+   "product": "Клей плиточный 25 кг"
+  },
+  {
+   "supplier_bin": "000000000001",
+   "alias": "Пена монт. проф. 750мл",
+   "product": "Пена монтажная 750 мл"
+  },
+  {
+   "supplier_bin": "000000000001",
+   "alias": "Саморез д/дерева 3,5х35 (1кг)",
+   "product": "Саморезы по дереву 3,5×35, 1 кг"
+  },
+  {
+   "supplier_bin": "000000000001",
+   "alias": "Валик 250мм",
+   "product": "Валик малярный 250 мм"
+  },
+  {
+   "supplier_bin": "000000000001",
+   "alias": "Лента малярная 48мм",
+   "product": "Скотч малярный 48 мм"
+  },
+  {
+   "supplier_bin": "000000000002",
+   "alias": "Гвозди 100 мм",
+   "product": "Гвозди строительные 100 мм, 1 кг"
+  },
+  {
+   "supplier_bin": "000000000002",
+   "alias": "Перчатки х/б",
+   "product": "Перчатки рабочие х/б"
+  },
+  {
+   "supplier_bin": "000000000002",
+   "alias": "Мешки мусорные 120л",
+   "product": "Мешки для мусора 120 л, 10 шт"
+  },
+  {
+   "supplier_bin": "000000000002",
+   "alias": "Ведро 12л",
+   "product": "Ведро пластиковое 12 л"
+  },
+  {
+   "supplier_bin": "000000000003",
+   "alias": "Изолента синяя",
+   "product": "Изолента ПВХ 19 мм"
+  },
+  {
+   "supplier_bin": "000000000003",
+   "alias": "Лампа LED 10W E27",
+   "product": "Лампа светодиодная 10 Вт E27"
+  },
+  {
+   "supplier_bin": "000000000003",
+   "alias": "Удлинитель 3гн 5м",
+   "product": "Удлинитель 3 розетки 5 м"
+  },
+  {
+   "supplier_bin": "000000000003",
+   "alias": "Кисть плоская 50",
+   "product": "Кисть малярная 50 мм"
+  },
+  {
+   "supplier_bin": "000000000004",
+   "alias": "Профиль направляющий 27х28 3м",
+   "product": "Профиль направляющий ПН 27×28, 3 м"
+  },
+  {
+   "supplier_bin": "000000000004",
+   "alias": "ГКЛ 12,5 мм",
+   "product": "Гипсокартон 12,5 мм 1200×2500"
+  },
+  {
+   "supplier_bin": "000000000004",
+   "alias": "Плинтус ПВХ 2,5м",
+   "product": "Плинтус ПВХ 2,5 м"
+  }
+ ]
+}

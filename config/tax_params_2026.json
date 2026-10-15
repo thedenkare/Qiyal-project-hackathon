@@ -1,0 +1,81 @@
+{
+  "_comment": "Налоговые параметры РК на 2026 год. Каждое значение с источником и датой проверки. Это параметры для оценки, а не налоговая консультация. Обновляйте при изменениях.",
+  "last_verified": "2026-10-14",
+  "verification_note": "Текст НК на adilet.zan.kz отдаётся только через JavaScript и не был прочитан автоматически. Значения сверены с публикациями КГД МФ РК (kgd.gov.kz, gov.kz) и egov.kz. Перед защитой стоит открыть НК (№ 214-VIII ЗРК от 18.07.2025) вручную и сверить номера статей.",
+  "tax_code": {
+    "value": "Налоговый кодекс РК от 18 июля 2025 года № 214-VIII ЗРК, действует с 01.01.2026",
+    "source_url": "https://adilet.zan.kz/rus/docs/K2500000214",
+    "status": "ссылка на первичный текст; содержимое не прочитано автоматически (SPA)"
+  },
+  "mrp_2026": {
+    "value": 4325,
+    "unit": "тенге",
+    "status": "ПРОВЕРЕНО",
+    "resolution": "Конфликт 4 325 vs 4 246 решён в пользу 4 325: КГД прямо использует 4 325 в расчёте порога НДС и лимита упрощёнки. 4 246 не подтверждено ни одним госисточником.",
+    "source_url": "https://www.gov.kz/memleket/entities/kgd/press/news/details/1096207?lang=ru",
+    "extra_sources": [
+      "https://tengrinews.kz/kazakhstan_news/utverjden-novyiy-mrp-na-2026-god-v-kazahstane-586608/"
+    ],
+    "last_verified": "2026-10-14"
+  },
+  "vat_standard_rate": {
+    "value": 0.16,
+    "status": "ПРОВЕРЕНО",
+    "quote": "Общеустановленная ставка НДС составляет 16%.",
+    "source_url": "https://zhts.kgd.gov.kz/ru/news/nalog-na-dobavlennuyu-stoimost-osnovnye-pravila-i-stavki-21-163770",
+    "published": "2026-03-04",
+    "last_verified": "2026-10-14"
+  },
+  "vat_reduced_rates": {
+    "value": {"medical_2026": 0.05, "medical_from_2027": 0.10, "periodicals": 0.10},
+    "status": "ПРОВЕРЕНО",
+    "source_url": "https://zhts.kgd.gov.kz/ru/news/nalog-na-dobavlennuyu-stoimost-osnovnye-pravila-i-stavki-21-163770",
+    "last_verified": "2026-10-14"
+  },
+  "allowed_vat_rates": [0, 0.05, 0.10, 0.16],
+  "vat_registration_threshold_mrp": {
+    "value": 10000,
+    "tenge_2026": 43250000,
+    "status": "ПРОВЕРЕНО",
+    "quote": "Порог для постановки на учет по НДС составляет 10 000-кратный размер МРП",
+    "note": "Обязательная постановка на учёт по НДС касается налогоплательщиков на общеустановленном режиме (ОУР).",
+    "source_url": "https://www.gov.kz/memleket/entities/kgd/press/news/details/1096207?lang=ru",
+    "extra_sources": [
+      "https://pvl.kgd.gov.kz/ru/news/izmeneniya-v-poryadke-registracii-po-nds-s-2026-goda-15-160680"
+    ],
+    "last_verified": "2026-10-14"
+  },
+  "snr_simplified": {
+    "income_limit_mrp": 600000,
+    "income_limit_tenge_2026": 2595000000,
+    "base_rate": 0.04,
+    "rate_adjustable_pct": 50,
+    "rate_min": 0.02,
+    "rate_max": 0.06,
+    "who_adjusts": "местные представительные органы (маслихаты), а не акимат — поправка к исходному промпту",
+    "vat_registration": "Обороты по СНР на основе упрощённой декларации являются необлагаемыми по НДС. По вторичным источникам (inbuh.kz, finance.kz) постановка на учёт по НДС для СНР с 2026 недоступна; в первичном тексте НК не сверено.",
+    "buyer_deduction_note": "КГД (ВКО): расходы покупателя на ОУР на приобретение у лиц на упрощённой декларации «не относятся на вычеты». Вид налога (КПН/ИПН) на странице не указан — в продукте не моделируется, только информационное предупреждение.",
+    "b2c_only": "КОНФЛИКТ/не подтверждено: первичный источник ограничений по продажам юрлицам не упоминает. Делаем это не правилом, а заметкой.",
+    "status": "ПРОВЕРЕНО (лимит, ставка, ±50%); ЧАСТИЧНО (НДС-регистрация)",
+    "quote": "предельный доход за календарный год не превышает 600 000-кратный размер месячного расчетного показателя ... ставки в размере 4 процентов ... Местные представительные органы имеют право понижать или повышать размер ставки, но не более чем на 50 процентов",
+    "source_url": "https://vko.kgd.gov.kz/ru/news/specialnyy-nalogovyy-rezhim-na-osnove-uproshchennoy-deklaracii-8-160720",
+    "published": "2025-12-04",
+    "last_verified": "2026-10-14"
+  },
+  "input_vat_credit_rule": {
+    "value": "Входной НДС относится в зачёт только плательщику НДС при наличии ЭСФ с выделенным НДС от поставщика-плательщика НДС.",
+    "status": "ПРОВЕРЕНО по вторичному источнику, ст. 480 НК со слов источника",
+    "source_url": "https://uchet.kz/question/voprosy-po-nalogooblozheniyu/1106683/",
+    "last_verified": "2026-10-14"
+  },
+  "market_benchmark": {
+    "nonfood_mom": 0.011,
+    "nonfood_yoy": 0.110,
+    "food_yoy": 0.085,
+    "total_yoy": 0.093,
+    "period": "сентябрь 2026",
+    "status": "из исходного промпта, со ссылкой на stat.gov.kz; автоматически не перепроверено",
+    "source_url": "https://stat.gov.kz/ru/news/inflyatsiya-v-respublike-kazakhstan-v-sentyabre-2026-goda/",
+    "last_verified": "2026-10-14"
+  }
+}

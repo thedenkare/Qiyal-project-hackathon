@@ -1,0 +1,93 @@
+{
+ "supplier_name": "ТОО «Демо-Оптбаза»",
+ "supplier_bin": "000000000001",
+ "doc_number": "1187",
+ "doc_date": "2026-10-09",
+ "prices_include_vat": true,
+ "lines": [
+  {
+   "name": "Цемент ПЦ-400 Д20, меш. 50кг",
+   "qty": 131,
+   "unit": "мешок",
+   "unit_price": 3320,
+   "amount": 434920,
+   "vat_rate": 0.16,
+   "vat_amount": 59988.97
+  },
+  {
+   "name": "Шпатлевка финиш. 20кг",
+   "qty": 43,
+   "unit": "мешок",
+   "unit_price": 4460,
+   "amount": 191780,
+   "vat_rate": 0.16,
+   "vat_amount": 26452.41
+  },
+  {
+   "name": "Краска в/э интерьерная 14 кг",
+   "qty": 21,
+   "unit": "шт",
+   "unit_price": 6720,
+   "amount": 141120,
+   "vat_rate": 0.16,
+   "vat_amount": 19464.83
+  },
+  {
+   "name": "Грунт глуб. проникн. 10л",
+   "qty": 25,
+   "unit": "шт",
+   "unit_price": 3270,
+   "amount": 81750,
+   "vat_rate": 0.16,
+   "vat_amount": 11275.86
+  },
+  {
+   "name": "Клей для плитки 25 кг",
+   "qty": 46,
+   "unit": "мешок",
+   "unit_price": 3030,
+   "amount": 139380,
+   "vat_rate": 0.16,
+   "vat_amount": 19224.83
+  },
+  {
+   "name": "Пена монт. проф. 750мл",
+   "qty": 56,
+   "unit": "шт",
+   "unit_price": 1980,
+   "amount": 110880,
+   "vat_rate": 0.16,
+   "vat_amount": 15293.79
+  },
+  {
+   "name": "Саморез д/дерева 3,5х35 (1кг)",
+   "qty": 39,
+   "unit": "уп",
+   "unit_price": 1800,
+   "amount": 70200,
+   "vat_rate": 0.16,
+   "vat_amount": 9682.76
+  },
+  {
+   "name": "Валик 250мм",
+   "qty": 23,
+   "unit": "шт",
+   "unit_price": 1100,
+   "amount": 25300,
+   "vat_rate": 0.16,
+   "vat_amount": 3489.66
+  },
+  {
+   "name": "Лента малярная 48мм",
+   "qty": 61,
+   "unit": "шт",
+   "unit_price": 620,
+   "amount": 37820,
+   "vat_rate": 0.16,
+   "vat_amount": 5216.55
+  }
+ ],
+ "total_gross": 1233150,
+ "total_vat": 170089.66,
+ "total_net": 1063060.34
+}

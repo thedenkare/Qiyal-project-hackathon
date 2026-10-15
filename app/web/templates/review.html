@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block title %}Проверка накладной · MarginGuard{% endblock %}
+{% macro fieldcell(cls, label, name, value, lineidx, field, unsure, extra="") -%}
+  {%- set msg = cell_issue.get((lineidx, field)) -%}
+  <div class="{{ cls }} {{ 'cell-flag' if msg else ('cell-unsure' if field in unsure else '') }}">
+    <label>{{ label }}{% if field in unsure and not msg %} <span class="tiny">· неуверенно</span>{% endif %}</label>
+    <input name="{{ name }}" value="{{ value }}" {{ extra|safe }}>
+    {% if msg %}<div class="cell-msg">{{ msg }}</div>{% endif %}
+  </div>
+{%- endmacro %}
+{% block content %}
+<div class="row" style="justify-content:space-between">
+  <h1 style="margin:0">Проверьте и подтвердите</h1>
+  <span>{% if doc.engine == 'demo' %}<span class="stamp demo">ДЕМО-эталон</span>{% else %}<span class="stamp new">{{ doc.engine_label }}</span>{% endif %}</span>
+</div>
+<p class="tiny">Распознано: <b>{{ doc.engine_label }}</b>. {{ doc.quality_note }} Ничего не сохраняется в учёт, пока вы не нажмёте «Подтвердить».</p>
+
+{% for b in banners %}<div class="banner warn">⚠️ {{ b }}</div>{% endfor %}
+{% if error %}<div class="banner err"><b>Не сохранено.</b> {{ error }}</div>{% endif %}
+
+<div class="review-layout">
+<div class="side">
+  {% if doc.stored_path %}
+  <details class="card" open>
+    <summary>Исходный документ</summary>
+    {% if doc.filename.lower().endswith('.pdf') %}<p><a href="/documents/{{ doc.id }}/file" target="_blank">Открыть PDF</a></p>
+    {% else %}<a href="/documents/{{ doc.id }}/file" target="_blank"><img class="preview" src="/documents/{{ doc.id }}/file" alt="Фото накладной" style="margin-top:8px"></a>{% endif %}
+  </details>
+  {% endif %}
+</div>
+
+<form method="post" action="/documents/{{ doc.id }}/confirm" id="rf"
+      hx-post="/documents/{{ doc.id }}/check" hx-trigger="change delay:150ms, input delay:600ms from:.num-in" hx-target="#checks" hx-swap="outerHTML">
+  <div class="card">
+    <div class="grid two">
+      <div class="field">
+        <label for="supplier_id">Поставщик</label>
+        <select name="supplier_id" id="supplier_id" style="width:100%">
+          <option value="">— выберите —</option>
+          {% for sp in suppliers %}<option value="{{ sp.id }}" {{ 'selected' if sp.id == doc.supplier_id }}>{{ sp.name }} · {{ 'НДС' if sp.vat_payer else 'без НДС' }}{{ ', ЭСФ' if sp.gives_esf }}</option>{% endfor %}
+          <option value="new">+ Новый поставщик…</option>
+        </select>
+        {% if doc.supplier_name_raw and not doc.supplier_id %}<div class="tiny">В документе: «{{ doc.supplier_name_raw }}»{% if doc.supplier_bin_raw %}, БИН {{ doc.supplier_bin_raw }}{% endif %}</div>{% endif %}
+        <div id="newsup" style="display:none;margin-top:8px">
+          <input name="new_supplier_name" placeholder="Название" value="{{ doc.supplier_name_raw or '' }}" style="width:100%;margin-bottom:6px">
+          <input name="new_supplier_bin" placeholder="БИН/ИИН" value="{{ doc.supplier_bin_raw or '' }}" style="width:100%;margin-bottom:6px">
+          <label class="row" style="font-weight:600"><input type="checkbox" name="new_supplier_vat" value="1" style="min-height:auto"> плательщик НДС</label>
+          <label class="row" style="font-weight:600"><input type="checkbox" name="new_supplier_esf" value="1" style="min-height:auto"> выставляет ЭСФ</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field" style="flex:1"><label>Дата</label><input type="date" name="doc_date" value="{{ doc.doc_date.isoformat() if doc.doc_date else '' }}" style="width:100%"></div>
+        <div class="field" style="flex:1"><label>Номер</label><input name="doc_number" value="{{ doc.doc_number or '' }}" style="width:100%"></div>
+      </div>
+    </div>
+    <label class="row" style="font-weight:650;color:var(--ink)"><input type="checkbox" name="prices_include_vat" value="1" {{ 'checked' if doc.prices_include_vat }} style="min-height:auto"> Цены в строках указаны с НДС</label>
+  </div>
+
+  {% include "_checks.html" %}
+
+  <h2>Позиции <span class="tiny">({{ lines|length }})</span></h2>
+  <div id="lines">
+  {% set src_lines = form_lines if form_lines is defined else lines %}
+  {% for ln in src_lines %}
+    {% set i = loop.index0 %}
+    {% set unsure = uncertain.get(ln.id, []) if ln.id is defined else [] %}
+    {% set cl = cands.get(ln.id, []) if ln.id is defined else [] %}
+    {% set lowc = (ln.confidence is defined and ln.confidence < low_conf) %}
+    <div class="review-line {{ 'lowconf' if lowc }}" data-i="{{ i }}">
+      <div class="lg">
+        {{ fieldcell('full', 'Наименование', 'name_%d'|format(i), ln.name, i, 'name', unsure) }}
+        {{ fieldcell('', 'Кол-во', 'qty_%d'|format(i), ln.qty|num, i, 'qty', unsure, 'inputmode="decimal" class="num-in"') }}
+        {{ fieldcell('', 'Ед.', 'unit_%d'|format(i), ln.unit or '', i, 'unit', unsure) }}
+        {{ fieldcell('', 'Цена', 'price_%d'|format(i), ln.unit_price|num, i, 'unit_price', unsure, 'inputmode="decimal" class="num-in"') }}
+        {{ fieldcell('', 'Сумма', 'amount_%d'|format(i), ln.amount|num, i, 'amount', unsure, 'inputmode="decimal" class="num-in"') }}
+        <div>
+          <label>НДС</label>
+          <select name="vat_{{ i }}">
+            {% for r in vat_rates %}<option value="{{ r }}" {{ 'selected' if (ln.vat_rate or 0) == r }}>{{ (r*100)|round|int }}%</option>{% endfor %}
+          </select>
+        </div>
+        <div class="match full">
+          <label>Товар в каталоге {% if ln.product_id and ln.match_score is defined and ln.match_score %}<span class="tiny">· совпадение {{ ln.match_score|round|int }}%</span>{% endif %}</label>
+          <div class="row" style="flex-wrap:nowrap">
+            <select name="product_{{ i }}" style="flex:1">
+              <option value="">— выберите —</option>
+              <option value="new" {{ 'selected' if ln.create_product is defined and ln.create_product }}>+ Новый товар «{{ ln.name[:30] }}»</option>
+              {% if cl %}<optgroup label="Похожие">{% for c in cl %}<option value="{{ c.product_id }}" {{ 'selected' if c.product_id == ln.product_id }}>{{ c.name }} · {{ c.score|round|int }}%{{ ' · запомнено' if c.via_alias }}</option>{% endfor %}</optgroup>{% endif %}
+              <optgroup label="Весь каталог">{% for p in products %}<option value="{{ p.id }}" {{ 'selected' if p.id == ln.product_id and not (cl and cl|selectattr('product_id','equalto',p.id)|list) }}>{{ p.name }}</option>{% endfor %}</optgroup>
+            </select>
+            <input type="hidden" name="del_{{ i }}" value="0">
+            <button type="button" class="btn small ghost js-del" title="Убрать строку">✕</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+  <button type="button" class="btn small ghost" id="addline">+ Добавить строку</button>
+
+  <div class="card" style="margin-top:14px">
+    <h3>Итоги документа</h3>
+    <div class="row">
+      <div class="field" style="flex:1"><label>Итого к оплате</label><input name="total_gross" class="num-in" inputmode="decimal" value="{{ doc.total_gross|num }}" style="width:100%"></div>
+      <div class="field" style="flex:1"><label>в т.ч. НДС</label><input name="total_vat" class="num-in" inputmode="decimal" value="{{ doc.total_vat|num }}" style="width:100%"></div>
+      <div class="field" style="flex:1"><label>Итого без НДС</label><input name="total_net" class="num-in" inputmode="decimal" value="{{ doc.total_net|num }}" style="width:100%"></div>
+    </div>
+  </div>
+
+  <div class="sticky-bar row" style="justify-content:space-between">
+    <button class="btn danger small" type="submit" formaction="/documents/{{ doc.id }}/delete" formnovalidate>Удалить</button>
+    <button class="btn tag" type="submit">✓ Подтвердить и посчитать</button>
+  </div>
+</form>
+</div>
+
+<template id="linetpl">
+  <div class="review-line" data-i="__I__"><div class="lg">
+    <div class="full"><label>Наименование</label><input name="name___I__"></div>
+    <div><label>Кол-во</label><input name="qty___I__" inputmode="decimal" class="num-in"></div>
+    <div><label>Ед.</label><input name="unit___I__" value="шт"></div>
+    <div><label>Цена</label><input name="price___I__" inputmode="decimal" class="num-in"></div>
+    <div><label>Сумма</label><input name="amount___I__" inputmode="decimal" class="num-in"></div>
+    <div><label>НДС</label><select name="vat___I__">{% for r in vat_rates %}<option value="{{ r }}">{{ (r*100)|round|int }}%</option>{% endfor %}</select></div>
+    <div class="match full"><label>Товар в каталоге</label><div class="row" style="flex-wrap:nowrap">
+      <select name="product___I__" style="flex:1"><option value="">— выберите —</option><option value="new">+ Новый товар</option>
+      {% for p in products %}<option value="{{ p.id }}">{{ p.name }}</option>{% endfor %}</select>
+      <input type="hidden" name="del___I__" value="0"><button type="button" class="btn small ghost js-del">✕</button></div></div>
+  </div></div>
+</template>
+{% endblock %}
+{% block scripts %}
+<script>
+const sup = document.getElementById('supplier_id');
+const toggleSup = () => document.getElementById('newsup').style.display = sup.value === 'new' ? 'block' : 'none';
+sup.addEventListener('change', toggleSup); toggleSup();
+document.getElementById('lines').addEventListener('click', e => {
+  const b = e.target.closest('.js-del'); if (!b) return;
+  const card = b.closest('.review-line'); const h = card.querySelector('input[name^="del_"]');
+  const on = h.value !== '1'; h.value = on ? '1' : '0'; card.classList.toggle('deleted', on);
+  b.textContent = on ? '↺' : '✕';
+  htmx.trigger(document.getElementById('rf'), 'change');
+});
+document.getElementById('addline').addEventListener('click', () => {
+  const n = document.querySelectorAll('#lines .review-line').length + 100;
+  const html = document.getElementById('linetpl').innerHTML.replaceAll('__I__', n);
+  document.getElementById('lines').insertAdjacentHTML('beforeend', html);
+});
+// после правки строки старые подсказки в её ячейках неактуальны: живая проверка сверху пересчитывается
+document.getElementById('lines').addEventListener('input', e => {
+  const card = e.target.closest('.review-line'); if (!card) return;
+  card.querySelectorAll('.cell-msg').forEach(m => m.remove());
+  card.querySelectorAll('.cell-flag').forEach(c => c.classList.remove('cell-flag'));
+});
+// подсказка: сумма = кол-во × цена, если сумма пустая
+document.getElementById('lines').addEventListener('change', e => {
+  const card = e.target.closest('.review-line'); if (!card) return;
+  const i = card.dataset.i, q = card.querySelector(`[name="qty_${i}"]`), p = card.querySelector(`[name="price_${i}"]`), a = card.querySelector(`[name="amount_${i}"]`);
+  const num = v => parseFloat(String(v).replace(/\s/g,'').replace(',','.'));
+  if (a && !a.value && q.value && p.value && !isNaN(num(q.value)*num(p.value))) a.value = Math.round(num(q.value)*num(p.value)*100)/100;
+});
+</script>
+{% endblock %}

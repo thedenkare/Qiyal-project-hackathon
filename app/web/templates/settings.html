@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Настройки · MarginGuard{% endblock %}
+{% block content %}
+<h1>Настройки</h1>
+{% if msg %}<div class="banner ok">{{ msg }}</div>{% endif %}
+{% if errors %}<div class="banner warn"><b>Замечания при импорте:</b><ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul></div>{% endif %}
+
+<form method="post" action="/settings" class="card ink">
+  <h2>Профиль бизнеса</h2>
+  <div class="field"><label>Название</label><input name="shop_name" value="{{ profile.shop_name }}" style="width:100%"></div>
+  <div class="field"><label>Налоговый режим</label>
+    <select name="regime" style="width:100%">
+      <option value="our" {{ 'selected' if profile.regime == 'our' }}>ОУР — плательщик НДС (берёт входной НДС в зачёт)</option>
+      <option value="snr" {{ 'selected' if profile.regime == 'snr' }}>СНР — упрощённая декларация (не плательщик НДС)</option>
+    </select></div>
+  <div class="grid three">
+    <div class="field"><label>Целевая маржа, %</label><input name="target_margin" inputmode="decimal" value="{{ (profile.target_margin*100)|round(1)|num }}"></div>
+    <div class="field"><label>Пол маржи, %</label><input name="margin_floor" inputmode="decimal" value="{{ (profile.margin_floor*100)|round(1)|num }}"></div>
+    <div class="field"><label>Округление цены, ₸</label><input name="rounding_step" inputmode="numeric" value="{{ profile.rounding_step }}"></div>
+    <div class="field"><label>Ставка упрощёнки, % ({{ tax.snr_rate_min|pct(0) }}–{{ tax.snr_rate_max|pct(0) }})</label><input name="snr_rate" inputmode="decimal" value="{{ (profile.snr_rate*100)|round(2)|num }}"></div>
+    <div class="field"><label>Оборот за 12 мес. вручную, ₸</label><input name="manual_turnover_12m" inputmode="decimal" value="{{ profile.manual_turnover_12m|num }}" placeholder="из импорта продаж"></div>
+  </div>
+  <p class="tiny">Ставку упрощёнки устанавливает маслихат вашего региона; уточните для Жамбылской области. Маржа считается до подоходного налога и накладных расходов.</p>
+  <button class="btn primary" type="submit">Сохранить и пересчитать</button>
+</form>
+
+<form method="post" action="/settings/products" class="card" id="catalog">
+  <h2>Каталог: цены на полке и продажи</h2>
+  <p class="tiny">Продажи в месяц нужны для оценки потерь в ₸. Макс. наценка — если на товар есть ограничение (поле необязательное).</p>
+  <div class="tablewrap"><table>
+    <tr><th>Товар</th><th class="num">На полке, ₸</th><th class="num">Продажи/мес</th><th class="num">Макс. наценка, %</th></tr>
+    {% for pr in products %}
+    <tr><td>{{ pr.name }}<div class="tiny">{{ pr.category }} · {{ pr.unit }}</div></td>
+      <td class="num"><input name="shelf_{{ pr.id }}" value="{{ pr.shelf_price|num }}" inputmode="decimal" style="width:92px;text-align:right"></td>
+      <td class="num"><input name="units_{{ pr.id }}" value="{{ pr.monthly_units|num }}" inputmode="decimal" style="width:72px;text-align:right"></td>
+      <td class="num"><input name="mm_{{ pr.id }}" value="{{ (pr.max_markup_pct*100)|round(1)|num if pr.max_markup_pct is not none else '' }}" inputmode="decimal" style="width:64px;text-align:right"></td></tr>
+    {% else %}<tr><td colspan="4" class="empty">Каталог пуст — импортируйте CSV ниже.</td></tr>{% endfor %}
+  </table></div>
+  {% if products %}<button class="btn" type="submit" style="margin-top:10px">Сохранить каталог</button>{% endif %}
+</form>
+
+<div class="card" id="data">
+  <h2>Данные</h2>
+  <div class="grid two">
+    <form method="post" action="/settings/import/catalog" enctype="multipart/form-data">
+      <h3>Импорт прайс-листа (CSV)</h3>
+      <p class="tiny">Колонки: <span class="mono">name, unit, category, shelf_price, monthly_units, max_markup_pct</span>. Разделитель «,» или «;», UTF-8 или Windows-1251.</p>
+      <input type="file" name="file" accept=".csv,text/csv" required> <button class="btn small" type="submit">Загрузить</button>
+    </form>
+    <form method="post" action="/settings/import/sales" enctype="multipart/form-data">
+      <h3>Импорт продаж (CSV)</h3>
+      <p class="tiny">Колонки: <span class="mono">month (ГГГГ-ММ), product, units, revenue</span>. Сейчас строк: {{ n_sales }}. Нужен для оборота за 12 мес.</p>
+      <input type="file" name="file" accept=".csv,text/csv" required> <button class="btn small" type="submit">Загрузить</button>
+    </form>
+  </div>
+  <p class="tiny">Интеграций с Kaspi, 1С и ЭСФ/КГД нет — только импорт файлов и ручной ввод.</p>
+  <div class="row" style="margin-top:10px">
+    <form method="post" action="/settings/reset-demo"><button class="btn small" type="submit">↺ Перезагрузить демо-данные</button></form>
+    <form method="post" action="/settings/start-clean"><button class="btn small danger" type="submit">Начать со своими данными (очистить всё)</button></form>
+    <a class="btn small ghost" href="/example" target="_blank">Пример результата (A4)</a>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Движки распознавания</h2>
+  <ul>{% for e in engines %}<li><b>{{ e.label }}</b>: {% if e.available %}<span class="yes">готов</span>{% else %}<span class="muted">{{ e.reason }}</span>{% endif %}</li>{% endfor %}
+    <li><b>ДЕМО-эталон</b>: всегда, только для файлов из demo_data/invoices</li>
+    <li><b>PDF с текстовым слоем</b>: всегда (проверен только на синтетике)</li></ul>
+  <p class="tiny">Ключ задаётся в файле .env (ANTHROPIC_API_KEY). Ключи не хранятся в базе и не логируются.</p>
+</div>
+
+<div class="card">
+  <h2>Налоговые параметры и источники</h2>
+  <p class="tiny">Файл config/tax_params_2026.json · проверено {{ tp.last_verified }}</p>
+  <div class="tablewrap"><table>
+    <tr><th>Параметр</th><th>Значение</th><th>Статус и источник</th></tr>
+    <tr><td>МРП 2026</td><td class="num">{{ tax.mrp|tg }}</td><td class="src">{{ tp.mrp_2026.status }} · <a href="{{ tp.mrp_2026.source_url }}" target="_blank" rel="noopener">источник</a><div>{{ tp.mrp_2026.resolution }}</div></td></tr>
+    <tr><td>Ставка НДС</td><td class="num">{{ tax.vat_rate|pct(0) }}</td><td class="src">{{ tp.vat_standard_rate.status }} · <a href="{{ tp.vat_standard_rate.source_url }}" target="_blank" rel="noopener">источник</a></td></tr>
+    <tr><td>Порог НДС</td><td class="num">{{ tax.vat_threshold_mrp|grp }} МРП</td><td class="src">{{ tp.vat_registration_threshold_mrp.status }} · <a href="{{ tp.vat_registration_threshold_mrp.source_url }}" target="_blank" rel="noopener">источник</a></td></tr>
+    <tr><td>Лимит упрощёнки</td><td class="num">{{ tax.snr_limit_mrp|grp }} МРП</td><td class="src">{{ tp.snr_simplified.status }} · <a href="{{ tp.snr_simplified.source_url }}" target="_blank" rel="noopener">источник</a></td></tr>
+    <tr><td>Ставка упрощёнки</td><td class="num">{{ tax.snr_base_rate|pct(0) }} (±50%)</td><td class="src">{{ tp.snr_simplified.who_adjusts }}</td></tr>
+    <tr><td>Рынок, непрод./мес</td><td class="num">{{ tax.nonfood_mom|pct(1) }}</td><td class="src">{{ tp.market_benchmark.status }} · <a href="{{ tp.market_benchmark.source_url }}" target="_blank" rel="noopener">источник</a></td></tr>
+  </table></div>
+  <p class="tiny">{{ tp.verification_note }}</p>
+</div>
+{% endblock %}

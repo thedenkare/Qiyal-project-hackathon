@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Цены на полку · MarginGuard{% endblock %}
+{% block content %}
+<h1>Цены на полку</h1>
+<p class="muted">Рекомендации под целевую маржу {{ p.target_margin|pct(0) }} по последней закупке. Отметьте, что применить, — или скачайте и распечатайте ценники.</p>
+{% if applied is not none %}<div class="banner ok">Обновлено цен: <b>{{ applied }}</b>. Маржа и алерты пересчитаны.</div>{% endif %}
+
+<div class="row" style="margin-bottom:12px">
+  <a class="btn small" href="/export/print?only=raise" target="_blank">🖨 Печать: что поднять</a>
+  <a class="btn small" href="/export/print?only=all" target="_blank">🖨 Весь прайс</a>
+  <a class="btn small" href="/export.csv">⬇ CSV для Excel</a>
+</div>
+
+{% if not rows %}
+<div class="card empty"><div class="ic">🏷️</div><h2>Каталог пуст</h2><p>Импортируйте прайс-лист в настройках или подтвердите накладную.</p><a class="btn" href="/settings#data">Настройки</a></div>
+{% else %}
+<form method="post" action="/export/apply">
+<div class="card">
+<div class="tablewrap"><table>
+  <tr><th></th><th>Товар</th><th class="num">Себест.</th><th class="num">На полке</th><th class="num">Маржа</th><th class="num">Новая цена</th></tr>
+  {% for r in rows %}{% set pr = r.product %}
+  <tr class="{{ 'dim' if r.action in ('keep','no_cost') }}">
+    <td>{% if r.rec %}<input type="checkbox" name="apply_{{ pr.id }}" value="1" {{ 'checked' if r.action in ('raise','set') }} style="min-height:auto" aria-label="Применить">{% endif %}</td>
+    <td>{{ pr.name }}<div class="tiny">{{ pr.category }}{% if r.cost %} · {{ r.cost.supplier }}, {{ r.cost.date|ddate }}{% endif %}</div>
+      {% if r.action == 'raise' %}<span class="stamp critical">поднять</span>{% elif r.action == 'set' %}<span class="stamp warn">нет цены</span>{% elif r.action == 'no_cost' %}<span class="tiny">нет закупок</span>{% endif %}
+      {% if r.rec and r.rec.capped %}<span class="stamp warn">потолок наценки</span>{% endif %}</td>
+    <td class="num">{{ r.cost.cost|tg if r.cost else '—' }}</td>
+    <td class="num">{{ pr.shelf_price|tg }}</td>
+    <td class="num" style="{{ 'color:var(--red);font-weight:700' if r.margin is not none and r.margin < p.margin_floor }}">{{ r.margin|pct }}</td>
+    <td class="num">{% if r.rec %}<input name="price_{{ pr.id }}" value="{{ (r.rec.price if r.action in ('raise','set') else pr.shelf_price)|num }}" inputmode="decimal" style="width:96px;text-align:right">
+      <div class="tiny">от {{ r.rec.low|tg }}</div>{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table></div>
+</div>
+<p class="tiny">«Поднять» — маржа ниже целевой больше чем на 1 п.п. Нижняя граница — цена под пол маржи {{ p.margin_floor|pct(0) }}. Влияние повышения на спрос не оценивается. Маржа до подоходного налога и накладных расходов.</p>
+<div class="sticky-bar"><button class="btn tag block" type="submit">✓ Применить отмеченные цены</button></div>
+</form>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Прайс-лист · {{ profile.shop_name }}</title>
+<link rel="stylesheet" href="/static/css/app.css">
+<style>
+ body{background:#fff;padding:16px}
+ .tags{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+ .t{border:2px solid #000;border-radius:6px 18px 18px 6px;padding:10px 26px 10px 12px;break-inside:avoid;position:relative;background:#fff}
+ .t .n{font-weight:700;font-size:.95rem;min-height:2.4em}
+ .t .p{font-size:2rem;font-weight:900}
+ .t .o{font-size:.8rem;color:#666;text-decoration:line-through}
+ .t::after{content:"";position:absolute;right:9px;top:50%;width:8px;height:8px;margin-top:-4px;border:2px solid #000;border-radius:50%}
+</style></head>
+<body>
+<div class="noprint row" style="justify-content:space-between;margin-bottom:12px">
+  <a class="btn small" href="/export">← Назад</a><button class="btn small tag" onclick="window.print()">🖨 Печать</button>
+</div>
+<h2>{{ profile.shop_name }} · ценники на {{ today|ddate }}{% if is_demo %} · ДЕМО-ДАННЫЕ{% endif %}</h2>
+{% if not rows %}<p>Нечего печатать: все цены в норме.</p>{% endif %}
+<div class="tags">
+{% for r in rows %}{% if r.rec %}
+  <div class="t"><div class="n">{{ r.product.name }}</div>
+    {% if r.product.shelf_price and r.product.shelf_price != r.rec.price %}<div class="o">{{ r.product.shelf_price|tg }}</div>{% endif %}
+    <div class="p">{{ (r.rec.price if only == 'raise' or r.action in ('raise','set') else r.product.shelf_price)|tg }}</div>
+    <div class="tiny">за {{ r.product.unit }}</div></div>
+{% endif %}{% endfor %}
+</div>
+</body></html>

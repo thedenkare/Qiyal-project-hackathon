@@ -1,0 +1,44 @@
+{
+ "supplier_name": "ТОО «Рассрочка-Демо»",
+ "supplier_bin": "000000000004",
+ "doc_number": "2025",
+ "doc_date": "2026-10-08",
+ "prices_include_vat": true,
+ "lines": [
+  {
+   "name": "Профиль направляющий 27х28 3м",
+   "qty": 105,
+   "unit": "шт",
+   "unit_price": 1220,
+   "amount": 128100,
+   "vat_rate": 0.16,
+   "vat_amount": 17668.97
+  },
+  {
+   "name": "ГКЛ 12,5 мм",
+   "qty": 65,
+   "unit": "шт",
+   "unit_price": 3570,
+   "amount": 232050,
+   "vat_rate": 0.16,
+   "vat_amount": 32006.9,
+   "uncertain": [
+    "unit_price",
+    "amount"
+   ],
+   "confidence": 0.65
+  },
+  {
+   "name": "Плинтус ПВХ 2,5м",
+   "qty": 55,
+   "unit": "шт",
+   "unit_price": 950,
+   "amount": 52250,
+   "vat_rate": 0.16,
+   "vat_amount": 7206.9
+  }
+ ],
+ "total_gross": 407200,
+ "total_vat": 56882.77,
+ "total_net": 355517.23
+}

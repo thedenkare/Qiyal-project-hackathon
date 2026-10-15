@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1d1a16">
+<title>{% block title %}MarginGuard{% endblock %}</title>
+<link rel="stylesheet" href="/static/css/app.css">
+<script src="/static/vendor/htmx.min.js" defer></script>
+{% block head %}{% endblock %}
+</head>
+<body>
+{% if is_demo %}<div class="demo-strip">ДЕМО-ДАННЫЕ · магазин, поставщики и цены вымышлены · <a href="/settings#data">свои данные</a></div>{% endif %}
+<header class="top">
+  <a class="brand" href="/"><span class="tagmark" aria-hidden="true"></span>MarginGuard</a>
+  <a class="gear" href="/settings" title="Настройки" aria-label="Настройки">⚙︎</a>
+</header>
+<main class="wrap">
+{% block content %}{% endblock %}
+</main>
+<nav class="tabbar" aria-label="Разделы">
+  <a href="/" class="{{ 'on' if nav in ('upload','review') }}"><span class="ic">📷</span>Накладная</a>
+  <a href="/changes" class="{{ 'on' if nav=='changes' }}"><span class="ic">📈</span>Изменения</a>
+  <a href="/suppliers" class="{{ 'on' if nav=='suppliers' }}"><span class="ic">🚚</span>Поставщики</a>
+  <a href="/regime" class="{{ 'on' if nav=='regime' }}"><span class="ic">🧾</span>Режим/НДС</a>
+  <a href="/export" class="{{ 'on' if nav=='export' }}"><span class="ic">🏷️</span>Цены</a>
+</nav>
+{% block scripts %}{% endblock %}
+</body>
+</html>

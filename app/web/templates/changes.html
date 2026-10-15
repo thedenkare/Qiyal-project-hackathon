@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Что изменилось · MarginGuard{% endblock %}
+{% block content %}
+<h1>Что изменилось</h1>
+{% if current %}
+<p class="muted">Накладная {{ current.doc_number or '' }} от {{ current.doc_date|ddate }} · {{ current_sup.name if current_sup else '' }}
+  {% if current.is_demo %}<span class="stamp demo">демо</span>{% endif %} · <a href="/changes">все документы</a></p>
+{% elif v.docs %}
+<p class="muted">По всем подтверждённым накладным ({{ v.docs|length }}). Откройте конкретную: {% for d in v.docs[:6] %}<a href="/changes?doc={{ d.id }}">№{{ d.doc_number or d.id }} {{ d.doc_date|ddate }}</a>{{ ', ' if not loop.last }}{% endfor %}</p>
+{% endif %}
+
+{% if not v.rows %}
+<div class="card empty"><div class="ic">📭</div><h2>Пока нечего сравнивать</h2>
+<p>Загрузите и подтвердите накладную — здесь появятся подорожания и рекомендации по ценам.</p>
+<a class="btn tag" href="/">Загрузить накладную</a></div>
+{% else %}
+
+<div class="grid two">
+  <div class="pricetag">
+    <div class="lbl">Подорожали</div>
+    <div class="big">{{ v.increased }} {{ 'позиция' if v.increased % 10 == 1 and v.increased != 11 else ('позиции' if v.increased % 10 in (2,3,4) and v.increased not in (12,13,14) else 'позиций') }}</div>
+    <div style="font-weight:650">
+      {% if v.avg_increase is not none %}в среднем {{ v.avg_increase|pct(1, True) }}{% if v.period_months %} за ~{{ '%.1f'|format(v.period_months)|replace('.', ',') }} мес.{% endif %}
+      {% if v.avg_monthly is not none %}≈ {{ v.avg_monthly|pct(1, True) }}/мес{% endif %}{% endif %}
+    </div>
+    <div class="tiny" style="color:var(--tag-ink)">Рынок (непрод. товары): {{ v.benchmark|pct(1, True) }}/мес · <a href="{{ src('market_benchmark').url }}" target="_blank" rel="noopener">stat.gov.kz</a></div>
+  </div>
+  <div class="grid two" style="gap:10px">
+    <div class="stat"><div class="lbl">Маржа затронутых позиций</div>
+      <div class="big">{{ v.margin_before|pct }} → <span style="color:var(--red)">{{ v.margin_after|pct }}</span></div>
+      <div class="tiny">средняя, при текущих ценах на полке</div></div>
+    <div class="stat"><div class="lbl">Уходит маржи, если не менять цены</div>
+      <div class="big" style="color:var(--red)">{{ v.loss_total|tg if v.loss_total is not none else '—' }}<span class="tiny">/мес</span></div>
+      <div class="tiny">{% if v.loss_unknown_for %}по {{ v.loss_known_for }} поз.; ещё по {{ v.loss_unknown_for }} нет продаж — <a href="/settings#catalog">введите</a>{% else %}по всем {{ v.loss_known_for }} поз.{% endif %}</div></div>
+  </div>
+</div>
+
+<details class="card" style="margin-top:14px">
+  <summary>Из каких допущений эти числа</summary>
+  <ul class="assume" style="padding-left:1.2em">
+    <li><b>Рост</b> = (новая себестоимость − последняя закупка у того же поставщика) / последняя закупка. «В месяц» — сложный процент за прошедшие месяцы.</li>
+    <li><b>Себестоимость</b> для режима {{ 'ОУР: у плательщика НДС с ЭСФ — цена без НДС (НДС в зачёт), у остальных — вся уплаченная сумма' if p.regime.value == 'our' else 'СНР: вся уплаченная поставщику сумма (зачёта НДС нет)' }}.</li>
+    <li><b>Маржа</b> = {{ '(цена без НДС − себестоимость) / цена без НДС' if p.regime.value == 'our' else '(цена × (1 − ставка упрощёнки) − себестоимость) / цена' }}. До подоходного налога и накладных расходов.</li>
+    <li><b>Потери/мес</b> = рост себестоимости за единицу × продажи в месяц из вашего каталога. Если продаж нет — не считаем.</li>
+    <li><b>Рекомендуемая цена</b> — под целевую маржу {{ p.target_margin|pct(0) }}, округление вверх до {{ p.rounding_step }} ₸; нижняя граница — под пол маржи {{ p.margin_floor|pct(0) }}. <b>Влияние на спрос не оценивается.</b></li>
+    <li>Это оценка, а не налоговая консультация.</li>
+  </ul>
+</details>
+
+<div class="row" style="justify-content:space-between;margin:6px 0 10px">
+  <h2 style="margin:0">По позициям</h2>
+  <a class="btn small tag" href="/export">🏷️ Новые ценники</a>
+</div>
+{% for r in v.rows %}
+  {% set a = r.alert %}
+  <div class="alert-card {{ a.severity }}">
+    <div class="head">
+      <div>
+        <div class="name">{{ r.product.name }}</div>
+        <div class="tiny">{{ r.supplier.name if r.supplier else '' }}{% if not current %} · №{{ r.doc.doc_number }} {{ r.doc.doc_date|ddate }}{% endif %}</div>
+      </div>
+      <div style="text-align:right">
+        {% if a.delta_pct is not none %}<div class="delta {{ 'up' if a.delta_pct > 0.001 else ('down' if a.delta_pct < -0.001 else '') }}">{{ a.delta_pct|pct(1, True) }}</div>{% endif %}
+        <span class="stamp {{ a.severity }}">{{ {'critical':'критично','warn':'внимание','ok':'норма','new':'новая'}[a.severity] }}</span>
+      </div>
+    </div>
+    <div class="mbar">
+      <span>Себест.: {{ a.ref_cost|tg if a.ref_cost else '—' }} <span class="arrow">→</span> <b>{{ a.new_cost|tg }}</b></span>
+      {% if a.margin_after is not none %}<span>· Маржа: {{ a.margin_before|pct }} <span class="arrow">→</span> <b style="color:{{ 'var(--red)' if a.margin_after < p.margin_floor else 'inherit' }}">{{ a.margin_after|pct }}</b></span>{% endif %}
+    </div>
+    {% if a.rec_price and r.product.shelf_price and a.rec_price > r.product.shelf_price %}
+    <div class="mbar">На полке {{ r.product.shelf_price|tg }} <span class="arrow">→</span> <span class="pricechip">{{ a.rec_price|tg }}</span>
+      <span class="tiny">диапазон {{ a.rec_low|tg }} – {{ a.rec_price|tg }}</span>
+      {% if a.monthly_pct is not none and a.monthly_pct > v.benchmark %}<span class="stamp warn">быстрее рынка</span>{% endif %}
+    </div>
+    {% endif %}
+    {% if a.rec_capped %}<div class="banner warn tiny" style="margin:6px 0 0">Рекомендация упёрлась в максимальную наценку для товара ({{ r.product.max_markup_pct|pct(0) }}). Проверьте, есть ли ограничения наценки.</div>{% endif %}
+    <div class="tiny" style="margin-top:4px">{{ r.text }}</div>
+  </div>
+{% endfor %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Режим и НДС · MarginGuard{% endblock %}
+{% macro srcline(key) %}{% set s = src(key) %}<div class="src">Источник: <a href="{{ s.url }}" target="_blank" rel="noopener">{{ s.url.split('/')[2] if s.url else '—' }}</a> · проверено {{ s.verified }}{% if s.status %} · {{ s.status }}{% endif %}</div>{% endmacro %}
+{% block content %}
+{% set st = r.status %}
+<h1>Режим и порог НДС</h1>
+<div class="banner warn"><b>Это не налоговый совет.</b> Панель показывает, где вы относительно порогов по найденным источникам. Решения о режиме принимайте с бухгалтером.</div>
+
+<div class="card ink">
+  <div class="row" style="justify-content:space-between">
+    <div><div class="tiny">Ваш режим (из настроек)</div><h2 style="margin:0">{{ 'ОУР, плательщик НДС' if r.profile.regime.value == 'our' else 'СНР: упрощённая декларация' }}</h2></div>
+    <a class="btn small" href="/settings">Изменить</a>
+  </div>
+  <p style="margin-top:10px">Оборот за 12 мес.: <b>{{ st.turnover_12m|tg }}</b> <span class="tiny">{{ r.turnover_source or 'не введён' }}</span></p>
+</div>
+
+<div class="grid two">
+  <div class="card">
+    <h3>Порог обязательной постановки на учёт по НДС</h3>
+    <p><b>{{ r.tax.vat_threshold_mrp|grp }} МРП</b> = {{ r.tax.vat_threshold_tenge|tg }} <span class="tiny">(МРП 2026 = {{ r.tax.mrp|tg }})</span></p>
+    {% if st.share_of_vat_threshold is not none %}
+    <div class="meter"><i class="{{ 'hot' if st.share_of_vat_threshold >= 0.8 }}" style="width:{{ [st.share_of_vat_threshold * 100, 100]|min }}%"></i></div>
+    <p class="tiny">{{ st.share_of_vat_threshold|pct(0) }} порога</p>{% endif %}
+    {{ srcline('vat_registration_threshold_mrp') }}
+    {{ srcline('mrp_2026') }}
+  </div>
+  <div class="card">
+    <h3>Лимит дохода для упрощённой декларации</h3>
+    <p><b>{{ r.tax.snr_limit_mrp|grp }} МРП</b> = {{ r.tax.snr_limit_tenge|tg }}</p>
+    {% if st.share_of_snr_limit is not none %}
+    <div class="meter"><i class="{{ 'hot' if st.share_of_snr_limit >= 0.8 }}" style="width:{{ [st.share_of_snr_limit * 100, 100]|min }}%"></i></div>
+    <p class="tiny">{{ st.share_of_snr_limit|pct(1) }} лимита</p>{% endif %}
+    <p class="tiny">Ставка {{ r.tax.snr_base_rate|pct(0) }}, маслихат может менять на ±50% ({{ r.tax.snr_rate_min|pct(0) }}–{{ r.tax.snr_rate_max|pct(0) }}).</p>
+    {{ srcline('snr_simplified') }}
+  </div>
+</div>
+
+<div class="card">
+  <h3>Что это значит для вас</h3>
+  <ul>{% for n in st.notes %}<li>{{ n }}</li>{% endfor %}</ul>
+  {% if r.profile.regime.value == 'our' %}
+  <p>Закупки за 12 мес.: <b>{{ r.purchases_12m|tg }}</b>, из них с НДС-зачётом: <b>{{ r.share_with_credit|pct(0) }}</b>.
+  Без зачёта — сценарно {{ r.leak_12m|tg }} НДС, который вы платите «из маржи» (<a href="/suppliers">по поставщикам</a>).</p>
+  {% endif %}
+  <p class="tiny">{{ tp.snr_simplified.buyer_deduction_note }}</p>
+  <p class="tiny">{{ tp.snr_simplified.b2c_only }}</p>
+</div>
+<p class="tiny">Налоговые параметры: config/tax_params_2026.json · сверено {{ tp.last_verified }}. {{ tp.verification_note }}</p>
+{% endblock %}
